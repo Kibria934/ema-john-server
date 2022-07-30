@@ -18,6 +18,7 @@ async function run() {
   try {
     await client.connect();
     const productsCollection = client.db("emaJohn").collection("products");
+
     app.get("/product", async (req, res) => {
       console.log("query", req.query);
       const page = parseInt(req.query.page);
@@ -36,6 +37,7 @@ async function run() {
 
       res.send(products);
     });
+
     app.get("/productCount", async (req, res) => {
       const query = {};
       const count = await productsCollection.estimatedDocumentCount();
@@ -44,7 +46,7 @@ async function run() {
 
     app.post("/productByKeys", async (req, res) => {
       const keys = req.body;
-      console.log(keys);
+      // console.log(keys);
       const ids = keys.map((id) => ObjectId(id));
       const query = {
         _id: {
